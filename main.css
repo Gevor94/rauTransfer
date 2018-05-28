@@ -1,0 +1,88 @@
+body {
+    background-color:#F0F0F0;
+    padding: 2em;
+    font-family: 'Raleway','Source Sans Pro', 'Arial';
+    background-image: url('./background.jpg');
+}
+
+table, th, td {
+    border: 1px solid white;
+    color: white;
+}
+
+.title, .select {
+    color: white;
+    font-style: italic;
+}
+
+.actionButton {
+    display: block;
+    border: 1px solid white;
+    margin: 8px;
+    width: 52%;
+    padding: 8px;
+    color: darkgray;
+}
+
+.addingStudents {
+    width: 65%;
+}
+
+.table-head {
+    color: white;
+    font-size: 75%;
+    font-style: italic;
+}
+
+.input-field {
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
+
+.container {
+    width: 50%;
+    margin: 0 auto;
+}
+label {
+    display:block;
+    margin-bottom:10px;
+}
+input {
+    padding:10px;
+    width: 50%;
+    margin-bottom: 1em;
+}
+button {
+    margin: 2em 0;
+    padding: 1em 4em;
+    display:block;
+}
+
+#instructor {
+    padding:1em;
+    background-color:#fff;
+    margin: 1em 0;
+}
+.calculate-exam-marks {
+    color: white;
+}
+.exam-mark-title {
+    color: white;
+}
+.calculatedMark {
+    color: white;
+}
+.debtor-students-title {
+    color: white;
+}
+.students-id {
+    color: white;
+}
+#input-file-name {
+    color: white;	
+}
+#file-name {
+    width: 20%;
+    border-radius: 14px;
+    display: block;
+}

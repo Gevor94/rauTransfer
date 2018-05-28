@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="./main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+    <div>
+        <h1 class="title">Добавление студентов</h1>
+	<h3 class="title">Плата обучения</h3>
+	<table id="addingStudents" class="display" style="width:65%">
+        <thead>
+            <tr>
+		<th class="table-head">ID</th>
+                <th class="table-head">Имя</th>
+                <th class="table-head">Фамилия</th>
+                <th class="table-head">Институт</th>
+                <th class="table-head">Факультет</th>
+		<th class="table-head">Плата за обучение</th>
+		<th class="table-head">Оплачено</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input  id="fee-id" class="input-field" type="text" id="id" name="studentID"></td>
+                <td><input  id="fee-name" class="input-field" type="text" id="name" name="name"></td>
+                <td><input  id="fee-surname" class="input-field" type="text" id="surname" name="surname"></td>
+                <td><input  id="fee-institute" class="input-field" type="text" id="institute" name="institute"></td>
+                <td><input  id="fee-faculty" class="input-field" type="text" id="faculty" name="faculty"></td>
+                <td><input  id="fee-fee" class="input-field" type="text" id="tuitionFee" name="tuitionFee"></td>
+                <td><input  id="fee-paid" class="input-field" type="text" id="paidFee" name="paidFee"></td>
+	    </tr>
+	<tbody>
+	</thead>
+	</table>
+	<button id="setStudentsFee">Добавить</button>
+	<h3 class="title">Набранные кредиты</h3>
+	<table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+		<th class="table-head">ID</th>
+                <th class="table-head">Имя</th>
+                <th class="table-head">Фамилия</th>
+                <th class="table-head">Институт</th>
+                <th class="table-head">Факультет</th>
+		<th class="table-head">Посещаемость 1</th>
+		<th class="table-head">Модуль 1</th>
+		<th class="table-head">Посещаемость 2</th>
+		<th class="table-head">Модуль 2</th>
+		<th class="table-head">Посещаемость 3</th>
+		<th class="table-head">Модуль 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input id="mark-id" class="input-field"  type="text" id="id" name="studentID"></td>
+                <td><input id="mark-name" class="input-field"  type="text" id="name" name="name"></td>
+                <td><input id="mark-surname" class="input-field"  type="text" id="surname" name="surname"></td>
+                <td><input id="mark-institute" class="input-field"  type="text" id="institute" name="institute"></td>
+                <td><input id="mark-faculty" class="input-field"  type="text" id="faculty" name="faculty"></td>
+                <td><input id="mark-attendance1" class="input-field"  type="text" id="attendanceMark1" name="attendanceMark1"></td>
+                <td><input id="mark-module1" class="input-field"  type="text" id="moduleMark1" name="moduleMark1"></td>
+                <td><input id="mark-attendance2" class="input-field"  type="text" id="attendanceMark2" name="attendanceMark2"></td>
+                <td><input id="mark-module2" class="input-field"  type="text" id="moduleMark2" name="moduleMark2"></td>
+                <td><input id="mark-attendance3" class="input-field"  type="text" id="attendanceMark3" name="attendanceMark3"></td>
+                <td><input id="mark-module3" class="input-field"  type="text" id="moduleMark3" name="moduleMark3"></td>
+	    </tr>
+	<tbody>
+	</thead>
+	</table>
+	<button id="setStudentsMarks">Добавить</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+    	if (typeof web3 !== 'undefined') {
+    	        web3 = new Web3(web3.currentProvider);
+    	} else {
+    	        // set the provider you want from Web3.providers
+    	        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    	}
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+	var CoursetroContract = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "studentID",
+				"type": "uint16"
+			}
+		],
+		"name": "getDebtorFaculty",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "studentID",
+				"type": "uint16"
+			}
+		],
+		"name": "getDebtorSurname",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint16"
+			}
+		],
+		"name": "studentsFee",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "surname",
+				"type": "string"
+			},
+			{
+				"name": "institute",
+				"type": "string"
+			},
+			{
+				"name": "faculty",
+				"type": "string"
+			},
+			{
+				"name": "tuitionFee",
+				"type": "uint32"
+			},
+			{
+				"name": "paidFee",
+				"type": "uint32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "allStudents",
+				"type": "uint16[]"
+			}
+		],
+		"name": "filterDebtorStudents",
+		"outputs": [
+			{
+				"name": "debtors",
+				"type": "uint16[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "studentID",
+				"type": "uint16"
+			}
+		],
+		"name": "getDebtorName",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentID",
+				"type": "uint16"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "surname",
+				"type": "string"
+			},
+			{
+				"name": "institute",
+				"type": "string"
+			},
+			{
+				"name": "faculty",
+				"type": "string"
+			},
+			{
+				"name": "tuitionFee",
+				"type": "uint32"
+			},
+			{
+				"name": "paidFee",
+				"type": "uint32"
+			}
+		],
+		"name": "setStudentFeeInformation",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentID",
+				"type": "uint16"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "surname",
+				"type": "string"
+			},
+			{
+				"name": "institute",
+				"type": "string"
+			},
+			{
+				"name": "faculty",
+				"type": "string"
+			},
+			{
+				"name": "attendanceMark1",
+				"type": "int256"
+			},
+			{
+				"name": "moduleMark1",
+				"type": "int256"
+			},
+			{
+				"name": "attendanceMark2",
+				"type": "int256"
+			},
+			{
+				"name": "moduleMark2",
+				"type": "int256"
+			},
+			{
+				"name": "attendanceMark3",
+				"type": "int256"
+			},
+			{
+				"name": "moduleMark3",
+				"type": "int256"
+			}
+		],
+		"name": "setStudentMarksInformation",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "studentID",
+				"type": "uint16"
+			}
+		],
+		"name": "getAverageMarkForExam",
+		"outputs": [
+			{
+				"name": "averageMark",
+				"type": "int256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint16"
+			}
+		],
+		"name": "studentsMarks",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "surname",
+				"type": "string"
+			},
+			{
+				"name": "institute",
+				"type": "string"
+			},
+			{
+				"name": "faculty",
+				"type": "string"
+			},
+			{
+				"name": "attendanceMark1",
+				"type": "int256"
+			},
+			{
+				"name": "moduleMark1",
+				"type": "int256"
+			},
+			{
+				"name": "attendanceMark2",
+				"type": "int256"
+			},
+			{
+				"name": "moduleMark2",
+				"type": "int256"
+			},
+			{
+				"name": "attendanceMark3",
+				"type": "int256"
+			},
+			{
+				"name": "moduleMark3",
+				"type": "int256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "studentID",
+				"type": "uint16"
+			}
+		],
+		"name": "getDebtorInstitute",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+	var Coursetro = CoursetroContract.at('0xfc809e3f7de7d95f2c4d4ed00ebc003654a46426');
+    </script>
+    <script>
+	$( "#setStudentsMarks" ).click(function() {
+	    var studentID = $('#mark-id').val();
+	    var studentName = $('#mark-name').val();
+	    var studentSurname = $('#mark-surname').val();
+	    var studentInstitute = $('#mark-institute').val();
+	    var studentFaculty = $('#mark-faculty').val();
+	    var studentAttendance1 = $('#mark-attendance1').val();
+	    var studentModule1 = $('#mark-module1').val();
+	    var studentAttendance2 = $('#mark-attendance2').val();
+	    var studentModule2 = $('#mark-module2').val();
+	    var studentAttendance3 = $('#mark-attendance3').val();
+	    var studentModule3 = $('#mark-module3').val();
+
+	    Coursetro.setStudentMarksInformation(parseInt(studentID), studentName, studentSurname, studentInstitute, studentFaculty, parseInt(studentAttendance1), parseInt(studentModule1), parseInt(studentAttendance2), parseInt(studentModule2), parseInt(studentAttendance3), parseInt(studentModule3), {from: web3.eth.accounts[0], gas:3000000});
+	});
+	$( "#setStudentsFee" ).click(function() {
+	    var studentID = $('#fee-id').val();
+	    var studentName = $('#fee-name').val();
+	    var studentSurname = $('#fee-surname').val();
+	    var studentInstitute = $('#fee-institute').val();
+	    var studentFaculty = $('#fee-faculty').val();
+	    var studentFee = $('#fee-fee').val();
+	    var studentPaid = $('#fee-paid').val();
+	    Coursetro.setStudentFeeInformation(parseInt(studentID), studentName, studentSurname, studentInstitute, studentFaculty, parseInt(studentFee), parseInt(studentPaid), {from: web3.eth.accounts[0], gas:3000000});
+	});
+    </script>
+</body>
+</html>
